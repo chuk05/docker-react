@@ -1,0 +1,8 @@
+language: generic   #specifies the language to display output
+sudo: required      #establish sudo privilage when travis is working for us
+services:
+  - docker          #require docker engine
+before_install: 
+  - docker build -f Dockerfile.dev -t chuk05/docker-react:latest .  #tell travis to build the image first
+script:
+  - docker run chuk05/docker-react npm run test -- --coverage #test: this is a docker command including coverage to return output after running the test or else travis will hang

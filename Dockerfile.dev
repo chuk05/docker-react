@@ -1,0 +1,16 @@
+# 1) #######################################################specify a base image####################################################### 
+FROM node:18-alpine
+
+# 2) #############################Download and install a dependency(commands to install additional programs)#############################
+USER node
+RUN mkdir -p /home/node/app
+WORKDIR /home/node/app
+
+
+COPY --chown=node:node ./package.json ./
+RUN npm i
+# with react app this COPY instruction is no longer nessesary since we have already volume binded the src and public files but can be there for reference
+COPY --chown=node:node ./ ./
+
+# 3) #####################################################Command to run on startup#####################################################
+CMD [ "npm", "start" ]
